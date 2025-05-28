@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MailSender.Common\MailSender.Common.csproj" />
     <ProjectReference Include="..\MailSender.Model\MailSender.Domain.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,4 @@
-﻿using MailSender.Application.Interfaces;
+﻿using MailSender.Application.Services.Interfaces;
 using MailSender.Domain.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,16 +17,16 @@ namespace MailSender.Controllers
             _tokenService = tokenService;
         }
 
-        private static readonly List<ClientAppDto> Clients = new()
+        private static readonly List<ClientApp> Clients = new()
         {
-            new ClientAppDto { ClientId = "app1", ClientSecret = "secret1" },
-            new ClientAppDto { ClientId = "app2", ClientSecret = "secret2" }
+            new ClientApp { AppId = "app1", AppName = "secret1" },
+            new ClientApp { AppId = "app2", AppName = "secret2" }
         };
 
         [HttpPost("GetToken")]
-        public async Task<IActionResult> GetToken([FromBody] ClientAppDto request)
+        public async Task<IActionResult> GetToken([FromBody] ClientApp request)
         {
-            var client = Clients.SingleOrDefault( c => c.ClientId == request.ClientId && c.ClientSecret == request.ClientSecret);
+            var client = Clients.SingleOrDefault( c => c.AppId == request.AppId && c.AppName == request.AppName);
 
             if (client == null)
                 return Unauthorized();

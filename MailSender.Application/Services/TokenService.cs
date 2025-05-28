@@ -1,4 +1,4 @@
-﻿using MailSender.Application.Interfaces;
+﻿using MailSender.Application.Services.Interfaces;
 using MailSender.Domain.DTOs;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,16 +15,17 @@ namespace MailSender.Application.Services
         /// <summary>
         /// Creates a signed JWT access token based on the provided client data and signing key.
         /// </summary>
-        /// <param name="clientAppDto">DTO containing client application identifier.</param>
+        /// <param name="clientApp">Model containing client application identifier.</param>
         /// <param name="signingKey">The secret key used to sign the JWT token.</param>
         /// <returns>A JWT token string.</returns>
-        public async Task<string> CreateAccessTokenAsync(ClientAppDto clientAppDto, string signingKey)
+        public string CreateAccessToken(ClientApp clientApp, string signingKey)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
 
             var claims = new[]
             {
-                new Claim("client_id", clientAppDto.ClientId),
+                new Claim("app_id", clientApp.AppId),
+                new Claim("app_name", clientApp.AppName),
                 new Claim(ClaimTypes.Role, "ClientApp")
             };
 
