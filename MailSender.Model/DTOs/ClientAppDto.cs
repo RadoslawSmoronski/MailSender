@@ -1,4 +1,4 @@
-﻿namespace MailSender.Model.DTOs
+﻿namespace MailSender.Domain.DTOs
 {
     public class ClientAppDto
     {

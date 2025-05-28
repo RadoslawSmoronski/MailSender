@@ -1,9 +1,7 @@
-
-using MailSender.Services;
-using MailSender.Services.Interfaces;
+using MailSender.Application.Interfaces;
+using MailSender.Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace MailSender
 {

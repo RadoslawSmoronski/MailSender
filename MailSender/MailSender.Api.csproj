@@ -12,7 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MailSender.Model\MailSender.Model.csproj" />
+    <ProjectReference Include="..\MailSender.Application\MailSender.Application.csproj" />
+    <ProjectReference Include="..\MailSender.Model\MailSender.Domain.csproj" />
   </ItemGroup>
 
 </Project>
