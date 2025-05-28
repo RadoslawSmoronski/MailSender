@@ -1,4 +1,5 @@
-﻿using MailSender.Application.Managers.Interfaces;
+﻿using AutoMapper;
+using MailSender.Application.Managers.Interfaces;
 using MailSender.Application.Services.Interfaces;
 using MailSender.Common.Result;
 using MailSender.Domain.DTOs;
@@ -17,14 +18,16 @@ namespace MailSender.Application.Managers
         private const string PASSWORD = "test";
 
         private readonly ITokenService _tokenService;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Initializes a new instance of <see cref="AuthManager"/>.
         /// </summary>
         /// <param name="tokenService">Service responsible for JWT token creation.</param>
-        public AuthManager(ITokenService tokenService)
+        public AuthManager(ITokenService tokenService, IMapper mapper)
         {
             _tokenService = tokenService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -56,21 +59,12 @@ namespace MailSender.Application.Managers
             if (appNameExist)
                 return Error.Conflict("This appName is already exist.");
 
-            var newClientApp = new ClientApp
-            {
-                AppId = registerDto.AppId,
-                AppName = registerDto.AppName,
-                Pass = PASSWORD
-            };
+            var newClientApp = _mapper.Map<ClientApp>(registerDto);
 
             var token = _tokenService.CreateAccessToken(newClientApp, registerDto.SigningJwtKey);
 
-            var result = new RegisteredDto
-            {
-                AppId = newClientApp.AppId,
-                AppName = newClientApp.AppName,
-                Key = token
-            };
+            var result = _mapper.Map<RegisteredDto>(newClientApp);
+            result.Key = token;
 
             return result;
         }

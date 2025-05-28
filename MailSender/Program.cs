@@ -1,3 +1,4 @@
+using MailSender.Application.Mappers;
 using MailSender.Application.Services;
 using MailSender.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -14,8 +15,8 @@ namespace MailSender
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
             builder.Services.AddScoped<ITokenService, TokenService>();
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
             var signingKey = builder.Configuration["JWT:SigningKey"];
