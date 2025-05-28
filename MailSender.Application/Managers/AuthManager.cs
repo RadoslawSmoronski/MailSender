@@ -50,11 +50,11 @@ namespace MailSender.Application.Managers
         {
             var appIdExist = Clients.Any(x => (x.AppId == registerDto.AppId));
             if (appIdExist)
-                return Result<RegisteredDto>.Failure(Error.Conflict("This appId is already exist."));
+                return Error.Conflict("This appName is already exist.");
 
             var appNameExist = Clients.Any(x => (x.AppName == registerDto.AppName));
             if (appNameExist)
-                return Result<RegisteredDto>.Failure(Error.Conflict("This appName is already exist."));
+                return Error.Conflict("This appName is already exist.");
 
             var newClientApp = new ClientApp
             {
@@ -72,7 +72,7 @@ namespace MailSender.Application.Managers
                 Key = token
             };
 
-            return Result<RegisteredDto>.Success(result);
+            return result;
         }
     }
 }

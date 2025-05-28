@@ -28,6 +28,10 @@
                 ? _value!
                 : throw new InvalidOperationException("No value for failure result.");
 
+        public static implicit operator Result<T>(Error error) => new(error);
+
+        public static implicit operator Result<T>(T value) => new(value);
+
         /// <summary>Creates a successful result with a return value.</summary>
         public static Result<T> Success(T value) => new(value);
 

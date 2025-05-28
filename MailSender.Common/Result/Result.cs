@@ -26,6 +26,8 @@
         /// <summary>Error associated with the failure. If successful, returns <see cref="Error.None"/>.</summary>
         public Error Error { get; }
 
+        public static implicit operator Result(Error error) => new(false, error);
+
         /// <summary>Creates a successful result without a return value.</summary>
         public static Result Success() => new(true, Error.None);
 
