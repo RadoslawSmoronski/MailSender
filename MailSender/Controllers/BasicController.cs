@@ -17,10 +17,10 @@ namespace MailSender.Controllers
             _tokenService = tokenService;
         }
 
-        private static readonly List<ClientApp> Clients = new()
+        private static readonly List<RegisteredDto> Clients = new()
         {
-            new ClientApp { AppId = "app1", AppName = "secret1" },
-            new ClientApp { AppId = "app2", AppName = "secret2" }
+            new RegisteredDto { AppId = "app1", AppName = "secret1" },
+            new RegisteredDto { AppId = "app2", AppName = "secret2" }
         };
 
         [HttpPost("GetToken")]
@@ -33,7 +33,7 @@ namespace MailSender.Controllers
 
             var signingJwtKey = _configuration["JWT:SigningKey"] ?? throw new ArgumentNullException("JWT:SigningKey", "Signing key must be provided in configuration.");
 
-            var jwt = await _tokenService.CreateAccessTokenAsync(request, signingJwtKey);
+            var jwt = _tokenService.CreateAccessToken(request, signingJwtKey);
 
             return Ok(new { token = jwt });
         }

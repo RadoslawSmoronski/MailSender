@@ -49,8 +49,12 @@ namespace MailSender.Application.Managers
         /// A <see cref="Result{RegisteredDto}"/> containing token and registration info,
         /// or an error result if app already exists.
         /// </returns>
-        public async Task<Result<RegisteredDto>> RegisterApplicationAsync(RegisterDto registerDto)
+        public async Task<Result<RegisteredDto>> RegisterApplicationAsync(RegisterAppDto registerDto)
         {
+            var signingKeyIsEmptyOrNull = String.IsNullOrEmpty(registerDto.SigningJwtKey);
+            if (signingKeyIsEmptyOrNull)
+                return Error.Failure("This signingKey is empty or nul.");
+
             var appIdExist = Clients.Any(x => (x.AppId == registerDto.AppId));
             if (appIdExist)
                 return Error.Conflict("This appName is already exist.");
@@ -61,7 +65,7 @@ namespace MailSender.Application.Managers
 
             var newClientApp = _mapper.Map<ClientApp>(registerDto);
 
-            var token = _tokenService.CreateAccessToken(newClientApp, registerDto.SigningJwtKey);
+            var token = _tokenService.CreateAccessToken(newClientApp, registerDto.SigningJwtKey!);
 
             var result = _mapper.Map<RegisteredDto>(newClientApp);
             result.Key = token;

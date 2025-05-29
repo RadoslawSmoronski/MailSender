@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MailSender.Domain.DTOs
 {
-    public class RegisterDto
+    public class RegisterAppDto
     {
         [Required]
         public string AppId { get; set; } = string.Empty;
@@ -15,5 +15,6 @@ namespace MailSender.Domain.DTOs
         public string AppName { get; set; } = string.Empty;
         [Required]
         public string Pass { get; set; } = string.Empty;
+        public string? SigningJwtKey { get; set; } = string.Empty;
     }
 }

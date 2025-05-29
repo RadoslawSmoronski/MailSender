@@ -5,6 +5,6 @@ namespace MailSender.Application.Managers.Interfaces
 {
     public interface IAuthManager
     {
-        Task<Result<RegisteredDto>> RegisterApplicationAsync(RegisterDto registerDto);
+        Task<Result<RegisteredDto>> RegisterApplicationAsync(RegisterAppDto registerDto);
     }
 }
