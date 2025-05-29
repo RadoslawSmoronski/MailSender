@@ -18,6 +18,7 @@ namespace MailSender
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddSwaggerGen(option =>
             {
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -50,6 +51,7 @@ namespace MailSender
             });
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<IAuthManager, AuthManager>();
+            builder.Services.AddScoped<IMailManager, MailManager>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 

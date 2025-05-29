@@ -12,10 +12,10 @@ namespace MailSender.Application.Mappers
     {
         public MappingProfile()
         {
-            CreateMap<RegisterAppDto, ClientApp>();
-            CreateMap<ClientApp, RegisterAppDto>();
+            CreateMap<RegisterAppDto, SimpleClientAppDto>();
+            CreateMap<SimpleClientAppDto, RegisterAppDto>();
             CreateMap<RegisterDto, RegisterAppDto>().ForMember(dest => dest.SigningJwtKey, opt => opt.Ignore());
-            CreateMap<ClientApp, RegisteredDto>().ForMember(dest => dest.Key, opt => opt.Ignore());
+            CreateMap<SimpleClientAppDto, RegisteredDto>().ForMember(dest => dest.Key, opt => opt.Ignore());
         }
     }
 }

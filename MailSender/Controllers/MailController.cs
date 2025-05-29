@@ -1,7 +1,9 @@
-﻿using MailSender.Domain.DTOs;
+﻿using MailSender.Application.Managers.Interfaces;
+using MailSender.Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace MailSender.Api.Controllers
 {
@@ -9,11 +11,36 @@ namespace MailSender.Api.Controllers
     [ApiController]
     public class MailController : ControllerBase
     {
+        private readonly IMailManager _mailManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public MailController(IMailManager mailManager, IHttpContextAccessor httpContextAccessor)
+        {
+            _mailManager = mailManager;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
         [Authorize]
         [HttpPost("send")]
         public async Task<IActionResult> SendAsync([FromBody] MailDto sendMailDto)
         {
-            return Ok(new SendedMailDto());
+            var claimsPrincipal = HttpContext.User;
+
+            var appId = claimsPrincipal.FindFirst("app_id")?.Value;
+            var appName = claimsPrincipal.FindFirst("app_name")?.Value;
+
+            var result = _mailManager.Send(appId, appName, sendMailDto);
+
+            if(result.IsSuccess)
+            {
+                return Ok(result.Value);
+            }
+
+            return Problem(
+                statusCode: 500,
+                title: "InternalServerError",
+                detail: "An unexpected error occurred."
+            );
         }
     }
 }

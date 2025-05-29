@@ -24,7 +24,7 @@ namespace MailSender.Controllers
         };
 
         [HttpPost("GetToken")]
-        public async Task<IActionResult> GetToken([FromBody] ClientApp request)
+        public async Task<IActionResult> GetToken([FromBody] SimpleClientAppDto request)
         {
             var client = Clients.SingleOrDefault( c => c.AppId == request.AppId && c.AppName == request.AppName);
 

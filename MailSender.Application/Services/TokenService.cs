@@ -18,7 +18,7 @@ namespace MailSender.Application.Services
         /// <param name="clientApp">Model containing client application identifier.</param>
         /// <param name="signingKey">The secret key used to sign the JWT token.</param>
         /// <returns>A JWT token string.</returns>
-        public string CreateAccessToken(ClientApp clientApp, string signingKey)
+        public string CreateAccessToken(SimpleClientAppDto clientApp, string signingKey)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
 

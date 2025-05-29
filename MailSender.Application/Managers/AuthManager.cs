@@ -63,7 +63,7 @@ namespace MailSender.Application.Managers
             if (appNameExist)
                 return Error.Conflict("This appName is already exist.");
 
-            var newClientApp = _mapper.Map<ClientApp>(registerDto);
+            var newClientApp = _mapper.Map<SimpleClientAppDto>(registerDto);
 
             var token = _tokenService.CreateAccessToken(newClientApp, registerDto.SigningJwtKey!);
 

@@ -4,6 +4,6 @@ namespace MailSender.Application.Services.Interfaces
 {
     public interface ITokenService
     {
-        string CreateAccessToken(ClientApp clientApp, string signingKey);
+        string CreateAccessToken(SimpleClientAppDto clientApp, string signingKey);
     }
 }
