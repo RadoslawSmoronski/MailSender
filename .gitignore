@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Data with paswords to smtp mail
+MailSender.Api/appsettings.json
+MailSender.Api/appsettings.Development.json

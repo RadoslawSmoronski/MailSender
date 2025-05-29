@@ -50,6 +50,7 @@ namespace MailSender
                 });
             });
             builder.Services.AddScoped<ITokenService, TokenService>();
+            //builder.Services.AddScoped<ISmtpService, SmtpService>();
             builder.Services.AddScoped<IAuthManager, AuthManager>();
             builder.Services.AddScoped<IMailManager, MailManager>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
