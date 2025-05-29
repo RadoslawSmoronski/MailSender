@@ -1,5 +1,6 @@
 ﻿using MailSender.Application.Managers.Interfaces;
 using MailSender.Domain.DTOs;
+using MailSender.Domain.Settings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,9 @@ namespace MailSender.Api.Controllers
     {
         private readonly IMailManager _mailManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly SmtpDto _settings;
+        private readonly SmtpSettings _settings;
 
-        public MailController(IMailManager mailManager, IHttpContextAccessor httpContextAccessor, IOptions<SmtpDto> options)
+        public MailController(IMailManager mailManager, IHttpContextAccessor httpContextAccessor, IOptions<SmtpSettings> options)
         {
             _mailManager = mailManager;
             _httpContextAccessor = httpContextAccessor;

@@ -5,15 +5,16 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
 using MailSender.Domain.DTOs;
+using MailSender.Domain.Settings;
 
 namespace MailSender.Application.Services
 {
     public class SmtpService : ISmtpService
     {
-        public Result Send(MailDto mailDto, SmtpDto smtpDto)
+        public Result Send(MailDto mailDto, SmtpSettings smtpSettings)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress(smtpDto.User, smtpDto.User));
+            message.From.Add(new MailboxAddress(smtpSettings.User, smtpSettings.User));
             message.To.Add(new MailboxAddress(mailDto.To, mailDto.To));
             message.Subject = mailDto.Subject;
 
@@ -29,9 +30,9 @@ namespace MailSender.Application.Services
                 return true;
             };
 
-            client.Connect(smtpDto.Host, smtpDto.Port, SecureSocketOptions.StartTls);
+            client.Connect(smtpSettings.Host, smtpSettings.Port, SecureSocketOptions.StartTls);
 
-            client.Authenticate(smtpDto.User, smtpDto.Password);
+            client.Authenticate(smtpSettings.User, smtpSettings.Password);
 
             client.Send(message);
             client.Disconnect(true);
