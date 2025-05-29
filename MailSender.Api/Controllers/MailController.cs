@@ -3,6 +3,7 @@ using MailSender.Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Security.Claims;
 
 namespace MailSender.Api.Controllers
@@ -13,11 +14,13 @@ namespace MailSender.Api.Controllers
     {
         private readonly IMailManager _mailManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly SmtpDto _settings;
 
-        public MailController(IMailManager mailManager, IHttpContextAccessor httpContextAccessor)
+        public MailController(IMailManager mailManager, IHttpContextAccessor httpContextAccessor, IOptions<SmtpDto> options)
         {
             _mailManager = mailManager;
             _httpContextAccessor = httpContextAccessor;
+            _settings = options.Value;
         }
 
         [Authorize]
@@ -29,7 +32,7 @@ namespace MailSender.Api.Controllers
             var appId = claimsPrincipal.FindFirst("app_id")?.Value;
             var appName = claimsPrincipal.FindFirst("app_name")?.Value;
 
-            var result = _mailManager.Send(appId, appName, sendMailDto);
+            var result = _mailManager.Send(appId, appName, sendMailDto, _settings);
 
             if(result.IsSuccess)
             {

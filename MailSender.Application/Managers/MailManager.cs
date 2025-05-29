@@ -7,21 +7,26 @@ namespace MailSender.Application.Managers
 {
     public class MailManager : IMailManager
     {
-
-        public Result<SendedMailDto> Send(string? AppId, string? AppName, MailDto mailDto)
+        private readonly ISmtpService _smtpService;
+        public MailManager(ISmtpService smtpService)
         {
-            //var result = _smptService.Send(mailDto);
+            _smtpService = smtpService;
+        }
 
-            //if (result.IsSuccess)
-            //{
-            //    return new SendedMailDto
-            //    {
-            //        AppId = AppId,
-            //        AppName = AppName,
-            //        Status = "test",
-            //        email = mailDto
-            //    };
-            //}
+        public Result<SendedMailDto> Send(string? AppId, string? AppName, MailDto mailDto, SmtpDto smtpDto)
+        {
+            var result = _smtpService.Send(mailDto, smtpDto);
+
+            if (result.IsSuccess)
+            {
+                return new SendedMailDto
+                {
+                    AppId = AppId,
+                    AppName = AppName,
+                    Status = "test",
+                    email = mailDto
+                };
+            }
 
             return Error.Failure("test");
         }

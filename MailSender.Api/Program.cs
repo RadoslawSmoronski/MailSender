@@ -3,6 +3,7 @@ using MailSender.Application.Managers.Interfaces;
 using MailSender.Application.Mappers;
 using MailSender.Application.Services;
 using MailSender.Application.Services.Interfaces;
+using MailSender.Domain.DTOs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -54,6 +55,7 @@ namespace MailSender
             builder.Services.AddScoped<IAuthManager, AuthManager>();
             builder.Services.AddScoped<IMailManager, MailManager>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
+            builder.Services.Configure<SmtpDto>(builder.Configuration.GetSection("Smtp"));
 
 
             var signingKey = builder.Configuration["JWT:SigningKey"];
