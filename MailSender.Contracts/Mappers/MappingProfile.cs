@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
-using MailSender.Domain.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MailSender.Contracts.DTOs;
 
-namespace MailSender.Application.Mappers
+namespace MailSender.Contracts.Mappers
 {
     public class MappingProfile : Profile
     {

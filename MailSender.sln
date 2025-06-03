@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSender.Domain", "MailSender.Model\MailSender.Domain.csproj", "{BDE8EF80-925E-4618-A86E-638C377A7301}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSender.Application", "MailSender.Application\MailSender.Application.csproj", "{9C64FBBD-2765-4E34-A50F-68E1C7F03D9D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSender.Common", "MailSender.Common\MailSender.Common.csproj", "{DFCBC461-F803-42D0-B495-90E9D059CC38}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSender.Api", "MailSender.Api\MailSender.Api.csproj", "{1599CD3E-1F26-8765-BB04-F4C563E8D8F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSender.Contracts", "MailSender.Contracts\MailSender.Contracts.csproj", "{95AEE370-72BC-99FA-1C11-5FFCE6DD1269}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BDE8EF80-925E-4618-A86E-638C377A7301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BDE8EF80-925E-4618-A86E-638C377A7301}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BDE8EF80-925E-4618-A86E-638C377A7301}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BDE8EF80-925E-4618-A86E-638C377A7301}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C64FBBD-2765-4E34-A50F-68E1C7F03D9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9C64FBBD-2765-4E34-A50F-68E1C7F03D9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C64FBBD-2765-4E34-A50F-68E1C7F03D9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{1599CD3E-1F26-8765-BB04-F4C563E8D8F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1599CD3E-1F26-8765-BB04-F4C563E8D8F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1599CD3E-1F26-8765-BB04-F4C563E8D8F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95AEE370-72BC-99FA-1C11-5FFCE6DD1269}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95AEE370-72BC-99FA-1C11-5FFCE6DD1269}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95AEE370-72BC-99FA-1C11-5FFCE6DD1269}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95AEE370-72BC-99FA-1C11-5FFCE6DD1269}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

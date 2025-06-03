@@ -1,7 +1,6 @@
-﻿
-using MailSender.Common.Result;
-using MailSender.Domain.DTOs;
-using MailSender.Domain.Settings;
+﻿using MailSender.Common.Result;
+using MailSender.Contracts.DTOs;
+using MailSender.Contracts.Settings;
 
 namespace MailSender.Application.Managers.Interfaces
 {

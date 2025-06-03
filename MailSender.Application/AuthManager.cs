@@ -2,9 +2,9 @@
 using MailSender.Application.Managers.Interfaces;
 using MailSender.Application.Services.Interfaces;
 using MailSender.Common.Result;
-using MailSender.Domain.DTOs;
+using MailSender.Contracts.DTOs;
 
-namespace MailSender.Application.Managers
+namespace MailSender.Application
 {
     /// <summary>
     /// Handles application registration and authentication logic.
@@ -51,15 +51,15 @@ namespace MailSender.Application.Managers
         /// </returns>
         public async Task<Result<RegisteredDto>> RegisterApplicationAsync(RegisterAppDto registerDto)
         {
-            var signingKeyIsEmptyOrNull = String.IsNullOrEmpty(registerDto.SigningJwtKey);
+            var signingKeyIsEmptyOrNull = string.IsNullOrEmpty(registerDto.SigningJwtKey);
             if (signingKeyIsEmptyOrNull)
                 return Error.Failure("This signingKey is empty or nul.");
 
-            var appIdExist = Clients.Any(x => (x.AppId == registerDto.AppId));
+            var appIdExist = Clients.Any(x => x.AppId == registerDto.AppId);
             if (appIdExist)
                 return Error.Conflict("This appName is already exist.");
 
-            var appNameExist = Clients.Any(x => (x.AppName == registerDto.AppName));
+            var appNameExist = Clients.Any(x => x.AppName == registerDto.AppName);
             if (appNameExist)
                 return Error.Conflict("This appName is already exist.");
 

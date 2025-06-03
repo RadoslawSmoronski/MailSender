@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using MailSender.Application.Managers.Interfaces;
 using MailSender.Common.Result;
-using MailSender.Domain.DTOs;
-using Microsoft.AspNetCore.Http;
+using MailSender.Contracts.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.FileSystemGlobbing.Internal;
 
 namespace MailSender.Api.Controllers
 {

@@ -1,11 +1,9 @@
 ﻿using MailSender.Application.Managers.Interfaces;
-using MailSender.Domain.DTOs;
-using MailSender.Domain.Settings;
+using MailSender.Contracts.DTOs;
+using MailSender.Contracts.Settings;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System.Security.Claims;
 
 namespace MailSender.Api.Controllers
 {

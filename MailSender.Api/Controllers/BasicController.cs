@@ -1,5 +1,5 @@
 ﻿using MailSender.Application.Services.Interfaces;
-using MailSender.Domain.DTOs;
+using MailSender.Contracts.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MailSender.Controllers

@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MailSender.Domain.DTOs
+namespace MailSender.Contracts.DTOs
 {
-    public class RegisteredDto
+    public class RegisterDto
     {
         [Required]
         public string AppId { get; set; } = string.Empty;
         [Required]
         public string AppName { get; set; } = string.Empty;
         [Required]
-        public string Key { get; set; } = string.Empty;
+        public string Pass { get; set; } = string.Empty;
     }
 }

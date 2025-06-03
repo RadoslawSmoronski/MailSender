@@ -4,8 +4,8 @@ using MailSender.Common.Result;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
-using MailSender.Domain.DTOs;
-using MailSender.Domain.Settings;
+using MailSender.Contracts.DTOs;
+using MailSender.Contracts.Settings;
 
 namespace MailSender.Application.Services
 {

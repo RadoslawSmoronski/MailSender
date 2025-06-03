@@ -1,9 +1,10 @@
+using MailSender.Application;
 using MailSender.Application.Managers;
 using MailSender.Application.Managers.Interfaces;
-using MailSender.Application.Mappers;
 using MailSender.Application.Services;
 using MailSender.Application.Services.Interfaces;
-using MailSender.Domain.Settings;
+using MailSender.Contracts.Mappers;
+using MailSender.Contracts.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;

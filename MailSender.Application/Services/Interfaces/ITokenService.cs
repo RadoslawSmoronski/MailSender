@@ -1,4 +1,4 @@
-﻿using MailSender.Domain.DTOs;
+﻿using MailSender.Contracts.DTOs;
 
 namespace MailSender.Application.Services.Interfaces
 {

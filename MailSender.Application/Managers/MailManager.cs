@@ -1,8 +1,8 @@
 ﻿using MailSender.Application.Managers.Interfaces;
 using MailSender.Application.Services.Interfaces;
 using MailSender.Common.Result;
-using MailSender.Domain.DTOs;
-using MailSender.Domain.Settings;
+using MailSender.Contracts.DTOs;
+using MailSender.Contracts.Settings;
 
 namespace MailSender.Application.Managers
 {

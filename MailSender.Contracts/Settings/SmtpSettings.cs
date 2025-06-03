@@ -1,4 +1,4 @@
-﻿namespace MailSender.Domain.Settings
+﻿namespace MailSender.Contracts.Settings
 {
     public class SmtpSettings
     {

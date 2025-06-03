@@ -1,5 +1,5 @@
 ﻿using MailSender.Common.Result;
-using MailSender.Domain.DTOs;
+using MailSender.Contracts.DTOs;
 
 namespace MailSender.Application.Managers.Interfaces
 {
