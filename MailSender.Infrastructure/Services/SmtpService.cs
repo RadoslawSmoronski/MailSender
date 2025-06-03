@@ -1,20 +1,29 @@
-﻿using MailKit.Security;
+﻿using MailKit.Net.Smtp;
+using MailKit.Security;
+using MailKit.Security;
 using MailSender.Application.Services.Interfaces;
 using MailSender.Common.Result;
-using MailKit.Net.Smtp;
-using MailKit.Security;
-using MimeKit;
 using MailSender.Contracts.DTOs;
 using MailSender.Contracts.Settings;
+using Microsoft.Extensions.Options;
+using MimeKit;
 
 namespace MailSender.Application.Services
 {
     public class SmtpService : ISmtpService
     {
-        public Result Send(MailDto mailDto, SmtpSettings smtpSettings)
+        private readonly SmtpSettings _smtpSettings;
+
+        public SmtpService(IOptions<SmtpSettings> smtpSettings)
+        {
+            _smtpSettings = smtpSettings.Value;
+        }
+
+
+        public Result Send(MailDto mailDto)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress(smtpSettings.User, smtpSettings.User));
+            message.From.Add(new MailboxAddress(_smtpSettings.User, _smtpSettings.User));
             message.To.Add(new MailboxAddress(mailDto.To, mailDto.To));
             message.Subject = mailDto.Subject;
 
@@ -30,9 +39,9 @@ namespace MailSender.Application.Services
                 return true;
             };
 
-            client.Connect(smtpSettings.Host, smtpSettings.Port, SecureSocketOptions.StartTls);
+            client.Connect(_smtpSettings.Host, _smtpSettings.Port, SecureSocketOptions.StartTls);
 
-            client.Authenticate(smtpSettings.User, smtpSettings.Password);
+            client.Authenticate(_smtpSettings.User, _smtpSettings.Password);
 
             client.Send(message);
             client.Disconnect(true);

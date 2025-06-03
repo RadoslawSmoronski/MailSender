@@ -13,13 +13,11 @@ namespace MailSender.Api.Controllers
     {
         private readonly IMailManager _mailManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly SmtpSettings _settings;
 
-        public MailController(IMailManager mailManager, IHttpContextAccessor httpContextAccessor, IOptions<SmtpSettings> options)
+        public MailController(IMailManager mailManager, IHttpContextAccessor httpContextAccessor)
         {
             _mailManager = mailManager;
             _httpContextAccessor = httpContextAccessor;
-            _settings = options.Value;
         }
 
         [Authorize]
@@ -31,7 +29,7 @@ namespace MailSender.Api.Controllers
             var appId = claimsPrincipal.FindFirst("app_id")?.Value;
             var appName = claimsPrincipal.FindFirst("app_name")?.Value;
 
-            var result = _mailManager.Send(appId, appName, sendMailDto, _settings);
+            var result = _mailManager.Send(appId, appName, sendMailDto);
 
             if(result.IsSuccess)
             {

@@ -6,6 +6,6 @@ namespace MailSender.Application.Services.Interfaces
 {
     public interface ISmtpService
     {
-        Result Send(MailDto mailDto, SmtpSettings smtpSettings);
+        Result Send(MailDto mailDto);
     }
 }
