@@ -51,19 +51,8 @@ namespace MailSender.Application.Managers
                     Email = mailDto
                 };
             }
-            else if (result.Error != null)
-            {
-                if (result.Error.errorType == ErrorType.Unauthentication)
-                {
-                    return Error.Unauthentication(result.Error.Description);
-                }
-                else
-                {
-                    return result.Error;
-                }
-            }
 
-            return Error.Unknown("Unknown problem");
+            return Error.Unknown(result.Error.Description);
         }
     }
 }

@@ -10,6 +10,7 @@ using MailSender.Infrastructure.EmailSender.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Resend;
 using System.Reflection;
 
 namespace MailSender
@@ -54,11 +55,20 @@ namespace MailSender
                 });
             });
             builder.Services.AddScoped<ITokenService, TokenService>();
-            builder.Services.AddScoped<IMailSenderProvider, BrevoMailSender>();
+            builder.Services.AddScoped<IMailSenderProvider, ResendMailSender>();
             builder.Services.AddScoped<IAuthManager, AuthManager>();
             builder.Services.AddScoped<IMailManager, MailManager>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.Configure<BrevoSettings>(builder.Configuration.GetSection("BrevoSettings"));
+            builder.Services.Configure<ResendSettings>(builder.Configuration.GetSection("ResendSettings"));
+
+            builder.Services.AddOptions();
+            builder.Services.AddHttpClient<ResendClient>();
+            builder.Services.Configure<ResendClientOptions>(options =>
+            {
+                options.ApiToken = builder.Configuration["ResendSettings:ApiKey"];
+            });
+            builder.Services.AddTransient<IResend, ResendClient>();
 
 
             var signingKey = builder.Configuration["JWT:SigningKey"];
