@@ -73,7 +73,7 @@ namespace MailSender.Api.Controllers
             var appId = claimsPrincipal.FindFirst("app_id")?.Value;
             var appName = claimsPrincipal.FindFirst("app_name")?.Value;
 
-            var result = _mailManager.Send(appId, appName, sendMailDto);
+            var result = await _mailManager.SendAsync(appId, appName, sendMailDto);
 
             if (result.IsSuccess)
             {

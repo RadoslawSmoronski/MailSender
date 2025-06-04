@@ -6,6 +6,6 @@ namespace MailSender.Application.Managers.Interfaces
 {
     public interface IMailManager
     {
-        Result<SendedMailDto> Send(string? AppId, string? AppName, MailDto mailDto);
+        Task<Result<SendedMailDto>> SendAsync(string? AppId, string? AppName, MailDto mailDto);
     }
 }

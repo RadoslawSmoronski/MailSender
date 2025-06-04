@@ -2,6 +2,7 @@
 using MailSender.Application.Services.Interfaces;
 using MailSender.Common.Result;
 using MailSender.Contracts.DTOs;
+using MailSender.Infrastructure.EmailSender.Interfaces;
 
 namespace MailSender.Application.Managers
 {
@@ -10,15 +11,15 @@ namespace MailSender.Application.Managers
     /// </summary>
     public class MailManager : IMailManager
     {
-        private readonly ISmtpService _smtpService;
+        private readonly IMailSenderProvider _mailSender;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MailManager"/> class with the specified SMTP service.
         /// </summary>
-        /// <param name="smtpService">The SMTP service instance used for sending emails.</param>
-        public MailManager(ISmtpService smtpService)
+        /// <param name="mailSender">The SMTP service instance used for sending emails.</param>
+        public MailManager(IMailSenderProvider mailSender)
         {
-            _smtpService = smtpService;
+            _mailSender = mailSender;
         }
 
         /// <summary>
@@ -31,14 +32,14 @@ namespace MailSender.Application.Managers
         /// A <see cref="Result{T}"/> containing <see cref="SendedMailDto"/> on success;
         /// otherwise, returns an <see cref="Error"/> describing the failure.
         /// </returns>
-        public Result<SendedMailDto> Send(string? appId, string? appName, MailDto mailDto)
+        public async Task<Result<SendedMailDto>> SendAsync(string? appId, string? appName, MailDto mailDto)
         {
             if (string.IsNullOrWhiteSpace(appId) || string.IsNullOrWhiteSpace(appName))
             {
                 return Error.Validation("AppId or AppName cannot be empty or null.");
             }
 
-            var result = _smtpService.Send(mailDto);
+            var result = await _mailSender.SendAsync(mailDto);
 
             if (result.IsSuccess)
             {
