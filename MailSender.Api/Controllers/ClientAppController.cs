@@ -74,7 +74,7 @@ namespace MailSender.Api.Controllers
 
             if (result.IsSuccess)
             {
-                return Ok(result);
+                return Ok(result.Value);
             }
             if (result.Error != null)
             {

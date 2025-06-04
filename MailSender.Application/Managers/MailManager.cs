@@ -46,7 +46,7 @@ namespace MailSender.Application.Managers
                 {
                     AppId = appId,
                     AppName = appName,
-                    Status = "Sent",
+                    Status = "queued",
                     Email = mailDto
                 };
             }
