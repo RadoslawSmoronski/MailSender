@@ -42,7 +42,7 @@ namespace MailSender.Application.Services
         public Result Send(MailDto mailDto)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress(_smtpSettings.User, _smtpSettings.User));
+            message.From.Add(new MailboxAddress(_smtpSettings.SenderEmail, _smtpSettings.SenderEmail));
             message.To.Add(new MailboxAddress(mailDto.To, mailDto.To));
             message.Subject = mailDto.Subject;
 
