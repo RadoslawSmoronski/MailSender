@@ -10,6 +10,7 @@
         Unauthorized,
         NotFound,
         Conflict,
-        Failure
+        Failure,
+        Unauthentication
     }
 }

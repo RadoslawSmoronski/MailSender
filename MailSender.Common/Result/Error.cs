@@ -22,6 +22,9 @@
         public static Error Unauthorized(string description) =>
             new("Unauthorized", description, ErrorType.Unauthorized);
 
+        public static Error Unauthentication(string description) =>
+            new("Unauthentication", description, ErrorType.Unauthentication);
+
         public static Error Unknown(string description) =>
             new("Unknown", description, ErrorType.Unknown);
 
