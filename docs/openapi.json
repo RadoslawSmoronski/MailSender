@@ -1,0 +1,476 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "MailSender REST API docs",
+      "version": "in dev"
+    },
+    "paths": {
+      "/api/client-app/register": {
+        "post": {
+          "tags": [
+            "ClientApp"
+          ],
+          "summary": "Register a new client application.",
+          "description": "This endpoint registers a new client application with the system.\r\nThe request must include all required registration data in the body as JSON.\r\n\r\nDuring registration, the server uses a configured JWT signing key and passes it along\r\nwith the client data to the authentication manager.",
+          "requestBody": {
+            "description": "The registration data sent by the client application.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterDto"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Application registered successfully.",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RegisterDto"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RegisterDto"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RegisterDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input or validation failure.",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Conflict – application with this data already exists.",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Unexpected server error occurred.",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/mail/send": {
+        "post": {
+          "tags": [
+            "Mail"
+          ],
+          "summary": "Sends an email message on behalf of the authenticated application.",
+          "description": "This endpoint sends an email using the data provided in the request body.\r\nThe email is sent on behalf of the application identified by claims \"app_id\" and \"app_name\".\r\n\r\nThe client must be authenticated to access this endpoint.\r\nThe request body must include a valid MailSender.Contracts.DTOs.MailDto object representing the email content.\r\n\r\nOn failure, the error is logged into the database.",
+          "requestBody": {
+            "description": "The email message details sent by the client application.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MailDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MailDto"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MailDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Email sent successfully.",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SendedMailDto"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SendedMailDto"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SendedMailDto"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input or validation failure.",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Client is not authenticated.",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Unexpected server error occurred.",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/mail/get-log": {
+        "get": {
+          "tags": [
+            "Mail"
+          ],
+          "summary": "Retrieves mail logs for the authenticated application.",
+          "description": "This endpoint returns the list of mail sending logs filtered by the authenticated application's \"app_id\" claim.\r\nThe client must be authenticated to access this endpoint.",
+          "responses": {
+            "200": {
+              "description": "Returns the list of mail logs.",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/MailLog"
+                    }
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/MailLog"
+                    }
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/MailLog"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input or validation failure.",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Client is not authenticated.",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Unexpected server error occurred.",
+              "content": {
+                "text/plain": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                },
+                "text/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProblemDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "MailDto": {
+          "required": [
+            "body",
+            "subject",
+            "to"
+          ],
+          "type": "object",
+          "properties": {
+            "to": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "subject": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "body": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "MailLog": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "appId": {
+              "type": "string",
+              "nullable": true
+            },
+            "recipient": {
+              "type": "string",
+              "nullable": true
+            },
+            "subject": {
+              "type": "string",
+              "nullable": true
+            },
+            "status": {
+              "type": "string",
+              "nullable": true
+            },
+            "errorMessage": {
+              "type": "string",
+              "nullable": true
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "additionalProperties": false
+        },
+        "ProblemDetails": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "nullable": true
+            },
+            "title": {
+              "type": "string",
+              "nullable": true
+            },
+            "status": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "detail": {
+              "type": "string",
+              "nullable": true
+            },
+            "instance": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": { }
+        },
+        "RegisterDto": {
+          "required": [
+            "appId",
+            "appName",
+            "pass"
+          ],
+          "type": "object",
+          "properties": {
+            "appId": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "appName": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "pass": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "SendedMailDto": {
+          "type": "object",
+          "properties": {
+            "appId": {
+              "type": "string",
+              "nullable": true
+            },
+            "appName": {
+              "type": "string",
+              "nullable": true
+            },
+            "status": {
+              "type": "string",
+              "nullable": true
+            },
+            "email": {
+              "$ref": "#/components/schemas/MailDto"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "securitySchemes": {
+        "Bearer": {
+          "type": "http",
+          "description": "Please enter a valid token",
+          "scheme": "Bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    },
+    "security": [
+      {
+        "Bearer": [ ]
+      }
+    ]
+  }
