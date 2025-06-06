@@ -6,6 +6,6 @@ namespace MailSender.Application.Services.Interfaces
     public interface IMailLogService
     {
         Task<Result> LogAsync(MailLog mailLog);
-        Task<Result<List<MailLog>>> GetLogs(string AppId);
+        Task<Result<List<MailLog>>> GetLogsAsync(string AppId);
     }
 }

@@ -1,13 +1,14 @@
 ﻿using MailSender.Application.Managers.Interfaces;
 using MailSender.Common.Result;
 using MailSender.Contracts.DTOs;
+using MailSender.Contracts.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MailSender.Api.Controllers
 {
     /// <summary>
-    /// Controller for managing email sending operations.
+    /// Controller for managing email sending operations and retrieving mail logs.
     /// </summary>
     [Route("api/mail")]
     [ApiController]
@@ -18,10 +19,10 @@ namespace MailSender.Api.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="MailController"/> class.
         /// </summary>
-        /// <param name="mailManager">Service responsible for handling mail sending logic.</param>
+        /// <param name="mailManager">Service responsible for handling mail sending and logging logic.</param>
         public MailController(IMailManager mailManager)
         {
-                _mailManager = mailManager;
+            _mailManager = mailManager;
         }
 
         /// <summary>
@@ -33,14 +34,10 @@ namespace MailSender.Api.Controllers
         /// 
         /// The client must be authenticated to access this endpoint.
         /// The request body must include a valid <see cref="MailDto"/> object representing the email content.
+        /// 
+        /// On failure, the error is logged into the database.
         /// </remarks>
         /// <param name="sendMailDto">The email message details sent by the client application.</param>
-        /// <returns>
-        /// Returns 200 OK with the sent mail details on success.
-        /// Returns 400 Bad Request if the input model is invalid.
-        /// Returns 401 Unauthorized if the client is not authenticated or unauthenticated.
-        /// Returns 500 Internal Server Error for unexpected failures.
-        /// </returns>
         /// <response code="200">Email sent successfully.</response>
         /// <response code="400">Invalid input or validation failure.</response>
         /// <response code="401">Client is not authenticated.</response>
@@ -69,7 +66,6 @@ namespace MailSender.Api.Controllers
             }
 
             var claimsPrincipal = HttpContext.User;
-
             var appId = claimsPrincipal.FindFirst("app_id")?.Value;
             var appName = claimsPrincipal.FindFirst("app_name")?.Value;
 
@@ -85,7 +81,65 @@ namespace MailSender.Api.Controllers
                 {
                     return Problem(
                         statusCode: 401,
-                        title: "Unauthentication",
+                        title: "Unauthorized",
+                        detail: result.Error.Description
+                    );
+                }
+
+                return Problem(
+                    statusCode: 500,
+                    title: "InternalServerError",
+                    detail: result.Error.Description
+                );
+            }
+
+            return Problem(
+                statusCode: 500,
+                title: "InternalServerError",
+                detail: "An unexpected error occurred."
+            );
+        }
+
+        /// <summary>
+        /// Retrieves mail logs for the authenticated application.
+        /// </summary>
+        /// <remarks>
+        /// This endpoint returns the list of mail sending logs filtered by the authenticated application's "app_id" claim.
+        /// The client must be authenticated to access this endpoint.
+        /// </remarks>
+        /// <response code="200">Returns the list of mail logs.</response>
+        /// <response code="400">Invalid input or validation failure.</response>
+        /// <response code="401">Client is not authenticated.</response>
+        /// <response code="500">Unexpected server error occurred.</response>
+        [Authorize]
+        [HttpGet("get-log")]
+        [ProducesResponseType(typeof(List<MailLog>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetLogAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var claimsPrincipal = HttpContext.User;
+            var appId = claimsPrincipal.FindFirst("app_id")?.Value;
+
+            var result = await _mailManager.GetLogsAsync(appId);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result.Value);
+            }
+            else if (result.Error != null)
+            {
+                if (result.Error.errorType == ErrorType.Unauthentication)
+                {
+                    return Problem(
+                        statusCode: 401,
+                        title: "Unauthorized",
                         detail: result.Error.Description
                     );
                 }

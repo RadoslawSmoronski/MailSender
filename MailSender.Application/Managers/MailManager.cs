@@ -63,7 +63,7 @@ namespace MailSender.Application.Managers
                 AppId = appId,
                 Recipient = mailDto.To,
                 Subject = mailDto.Subject,
-                Status = "Failed",
+                Status = "failed",
                 ErrorMessage = result.Error.Description
             };
 
@@ -72,6 +72,31 @@ namespace MailSender.Application.Managers
             if (!logResult.IsSuccess)
             {
                 return Error.Unknown($"Failed to save log: {logResult.Error.Description} | Original error: {result.Error.Description}");
+            }
+
+            return Error.Unknown(result.Error.Description);
+        }
+
+        /// <summary>
+        /// Retrieves a list of mail logs filtered by the specified application ID.
+        /// </summary>
+        /// <param name="appId">The application identifier to filter logs. Cannot be null or empty.</param>
+        /// <returns>
+        /// A <see cref="Result{List{MailLog}}"/> containing the list of mail logs on success;
+        /// or an <see cref="Error"/> describing the failure.
+        /// </returns>
+        public async Task<Result<List<MailLog>>> GetLogsAsync(string? appId)
+        {
+            if (string.IsNullOrWhiteSpace(appId))
+            {
+                return Error.Validation("AppId cannot be empty or null.");
+            }
+
+            var result = await _logService.GetLogsAsync(appId);
+
+            if (result.IsSuccess)
+            {
+                return result.Value;
             }
 
             return Error.Unknown(result.Error.Description);

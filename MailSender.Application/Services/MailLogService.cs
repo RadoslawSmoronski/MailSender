@@ -27,7 +27,7 @@ namespace MailSender.Application.Services
         /// <param name="AppId">The application ID to filter logs by.</param>
         /// <returns>A <see cref="Result{List{MailLog}}"/> containing the list of matching mail logs,
         /// or an error result if retrieval fails.</returns>
-        public async Task<Result<List<MailLog>>> GetLogs(string AppId)
+        public async Task<Result<List<MailLog>>> GetLogsAsync(string AppId)
         {
             try
             {
