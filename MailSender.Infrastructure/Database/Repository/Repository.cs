@@ -5,10 +5,10 @@ namespace MailSender.Infrastructure.Database.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly DbContext _context;
+        private readonly AppDbContext _context;
         private readonly DbSet<T> _dbSet;
 
-        public Repository(DbContext context)
+        public Repository(AppDbContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();
@@ -47,6 +47,11 @@ namespace MailSender.Infrastructure.Database.Repository
         public void Delete(T entity)
         {
             _dbSet.Remove(entity);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

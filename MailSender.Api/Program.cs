@@ -6,6 +6,7 @@ using MailSender.Application.Services.Interfaces;
 using MailSender.Contracts.Mappers;
 using MailSender.Contracts.Settings;
 using MailSender.Infrastructure.Database;
+using MailSender.Infrastructure.Database.Repository;
 using MailSender.Infrastructure.EmailSender;
 using MailSender.Infrastructure.EmailSender.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -29,6 +30,8 @@ namespace MailSender
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseInMemoryDatabase("GlobalAppDb"));
+
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             builder.Services.AddSwaggerGen(option =>
             {

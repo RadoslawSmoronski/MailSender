@@ -11,5 +11,6 @@ namespace MailSender.Infrastructure.Database.Repository
         Task AddAsync(T entity);
         void Update(T entity);
         void Delete(T entity);
+        Task SaveChangesAsync();
     }
 }
