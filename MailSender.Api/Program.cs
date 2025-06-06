@@ -5,9 +5,11 @@ using MailSender.Application.Services;
 using MailSender.Application.Services.Interfaces;
 using MailSender.Contracts.Mappers;
 using MailSender.Contracts.Settings;
+using MailSender.Infrastructure.Database;
 using MailSender.Infrastructure.EmailSender;
 using MailSender.Infrastructure.EmailSender.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Resend;
@@ -24,6 +26,10 @@ namespace MailSender
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            options.UseInMemoryDatabase("GlobalAppDb"));
+
             builder.Services.AddSwaggerGen(option =>
             {
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
