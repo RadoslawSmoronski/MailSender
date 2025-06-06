@@ -55,7 +55,7 @@ namespace MailSender
                 });
             });
             builder.Services.AddScoped<ITokenService, TokenService>();
-            builder.Services.AddScoped<IMailSenderProvider, ResendMailSender>();
+            builder.Services.AddScoped<IMailSenderProvider, BrevoMailSender>();
             builder.Services.AddScoped<IAuthManager, AuthManager>();
             builder.Services.AddScoped<IMailManager, MailManager>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
